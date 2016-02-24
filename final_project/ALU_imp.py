@@ -20,9 +20,10 @@ ALU_OPS = enum(
 ALU_STATUSES = enum(
     "ZERO",
     "NEGATIVE",
-    "EQUAL",
     "POSITIVE"
     )
+
+ALU_STATUS = [{}]
 
 
 def ALU(A, B, result, status, clk, opcode, width=8):
@@ -32,7 +33,7 @@ def ALU(A, B, result, status, clk, opcode, width=8):
     A      --> integer input (operand)
     B      --> integer input (operand)
     result --> output results of operation
-    status --> output status (carry out, overflow, zero, negative)
+    status --> output status (positive, zero, negative)
     clk    --> input clock
     opcode --> specifies the operation (look at ALU_OPS)
     """
@@ -47,6 +48,12 @@ def ALU(A, B, result, status, clk, opcode, width=8):
             result.next = A & B
         elif opcode.val == ALU_OPS.XOR:
             result.next = A ^ B
+        elif opcode.val == ALU_OPS.ADD:
+            result.next = A + B
+        elif opcode.val == ALU_OPS.SUBTRACT:
+            result.next = A - B
+        elif opcode.val == ALU_OPS.MULTIPLY:
+            result.next = A * B
 
         # check if anything happened (Zero, negative, etc..)
         if result.next < 0:
@@ -55,7 +62,5 @@ def ALU(A, B, result, status, clk, opcode, width=8):
             status.next = Signal(ALU_STATUSES.POSITIVE)
         elif result.next == 0:
             status.next = Signal(ALU_STATUSES.ZERO)
-        elif A.val == B.val:
-            status.next = Signal(ALU_STATUSES.EQUAL)
 
     return alu
