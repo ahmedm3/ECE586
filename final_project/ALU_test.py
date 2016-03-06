@@ -35,7 +35,8 @@ def test_ALU():
     def clkgen():
         clk.next = not clk
 
-    @always(clk.negedge)
+    #@always(clk.negedge)
+    @always(delay(105))
     def stimulus():
         #if A.val != (2**WIDTH - 1):
         if A.val != (2**(WIDTH-1) - 1):
@@ -50,8 +51,9 @@ def test_ALU():
     @instance
     def self_check():
         while True:
-            yield clk.posedge
-            yield delay(5)
+            #yield clk.posedge
+            #yield delay(5)
+            yield result
             if opcode.val == Signal(ALU_OPS.OR):
                 if result.val != (A | B):
                     print("Error: %d | %d -> %d ?" % (A.val, B.val, result.val))
