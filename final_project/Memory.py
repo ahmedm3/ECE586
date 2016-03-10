@@ -6,7 +6,7 @@ Memory Implementation
 All rights reserved
 """
 
-import CPU
+import config
 
 # Memory Space
 MEM_SPACE = {}
@@ -23,8 +23,13 @@ def Mem(addr, din = 0, we = False):
     data_out = {}
 
     global MEM_SPACE
+    addr = addr.lower()
+
+    if addr.startswith('0x'):
+        addr = addr[2:]
 
     if we:
+        din = din.lower()
         MEM_SPACE[addr] = []
         
         if din.startswith('0x'):
@@ -39,16 +44,14 @@ def Mem(addr, din = 0, we = False):
         while i <= 6:
             MEM_SPACE[addr].append(din[i:i+2])
             i += 2
-        CPU.GLOBAL_CLOCK = 2 * CPU.CLOCK_CYCLE
     elif addr in MEM_SPACE:
         data_out["DATA"] = MEM_SPACE[addr]
         data_out["VALID"] = True
-        CPU.GLOBAL_CLOCK = 2 * CPU.CLOCK_CYCLE
     else:
         data_out["VALID"] = False
         data_out["DATA"] = False
-        CPU.GLOBAL_CLOCK = 2 * CPU.CLOCK_CYCLE
 
+    config.GLOBAL_CLOCK += 2 * config.CLOCK_CYCLE
     return data_out
 
 
@@ -63,7 +66,7 @@ if __name__ == "__main__":
     for i in range(5):
         data = hex(randrange(100))
         print("Writing %s to address %s" % (data, hex(i*4)))
-        Mem(hex(i*4), din = data, we = True)
+        Mem(hex(i*4)[2:], din = data, we = True)
 
     print("\n-----------------")
     for i in range(6):

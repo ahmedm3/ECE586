@@ -8,27 +8,29 @@ All rights reserved
 
 import argparse
 import Memory
+import ALU
+import instruction_decoder
+import config
 
-
-GLOBAL_CLOCK = 0 # global clock
-CLOCK_CYCLE = 32 * 10 # clock cycle
-PC = 0 # program counter
 STACK = []
 
 def CPU(args):
-
-    global PC
-
-    Memory.Mem(0, din=0x54325, we=True)
-    Memory.Mem(4, din=0x5AA25, we=True)
-    Memory.Mem(8, din=0x5B00A5, we=True)
+    
+    Memory.Mem('0x0', din = '0x00000000', we = True)
+    Memory.Mem('0x4', din = '0x10000000', we = True)
+    Memory.Mem('0x8', din = '0x30000000', we = True)
+    Memory.Mem('0xc', din = '0xD0000000', we = True)
 
     #while True:
-    print(fetch(PC))
-    PC += 4
-    print(fetch(PC))
-
-
+    decoded = {'OPCODE': 'None'}
+    while 'OPCODE' in decoded and decoded['OPCODE'] != 'HALT':
+        instruc = fetch(hex(config.PC))  
+        decoded = decode(instruc['DATA'])
+        print(decoded['OPCODE'])
+        ALU.ALU(0, 0, 'ADD')
+        config.PC += 4
+    
+    print("CLOCK: %d" % config.GLOBAL_CLOCK)
 
 
 def fetch(addr):
@@ -42,8 +44,8 @@ def fetch(addr):
 
     return Memory.Mem(addr)
 
-def decode():
-    pass
+def decode(ins):
+    return instruction_decoder.decode(ins)
 
 
 # -------------------------------------
