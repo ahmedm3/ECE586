@@ -17,26 +17,24 @@ def decode(instruction):
     returns: decoded instruction
     """
 
-    decoded = {}
+    decoded = {'OPCODE': ''}
     opcode = instruction[0][0]
     decoded_bin = bin(int(''.join(instruction), 16))[2:]
 
     while len(decoded_bin) < 32:
         decoded_bin = '0' + decoded_bin
-    
+
     opcode = hex(int(decoded_bin[0:5], 2))[2:]
     
     if opcode in config.ISA:
         decoded['OPCODE'] = config.ISA[opcode]
+    else:
+        config.JUMPS.append(config.PC - 4)
     
-    src1 = hex(int(decoded_bin[5:15], 2))[2:]
-    src2 = hex(int(decoded_bin[15:24], 2))[2:]
-    dest = hex(int(decoded_bin[24:32], 2))[2:]
+    src1 = hex(int(decoded_bin[5:14], 2))[2:]
+    src2 = hex(int(decoded_bin[14:23], 2))[2:]
+    dest = hex(int(decoded_bin[23:32], 2))[2:]
 
-    #src1 = extend_to_32(src1)
-    #src2 = extend_to_32(src2)
-    #dest = extend_to_32(dest)
-    
     decoded['SRC1'] = src1
     decoded['SRC2'] = src2
     decoded['DEST'] = dest
@@ -45,12 +43,6 @@ def decode(instruction):
 
     return decoded
 
-def extend_to_32(data):
-
-    while len(data) < 8:
-        data = '0' + data
-
-    return data
 
 if __name__ == '__main__':
 
