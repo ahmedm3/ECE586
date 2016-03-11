@@ -31,7 +31,9 @@ def CPU(args):
     config.REGISTER[1] = 4*101
     config.REGISTER[2] = 4*102
     config.REGISTER[3] = 4*103
-    config.REGISTER[9] = -8
+    config.REGISTER[9] = 1
+    config.REGISTER[10] = -4
+    """
     Memory.Mem('0x0', din = '0x30000004', we = True) # LOAD R4, [R0]
     Memory.Mem('0x4', din = '0x30040005', we = True) # LOAD R5, [R1]
     Memory.Mem('0x8', din = '0x281408063', we = True) # MULT R6, R5, R4
@@ -44,8 +46,12 @@ def CPU(args):
     Memory.Mem('0x24', din = '0xF8080C04', we = True) # LOOP
     Memory.Mem('0x28', din = '0x20040601', we = True) # SUB R1, R1, R3
     Memory.Mem('0x2C', din = '0x48041209', we = True) # BEQ R1, R9
+    """
+    Memory.Mem('0x0', din = '0xF8080C04', we = True) # LOOP
+    Memory.Mem('0x4', din = '0x1828120A', we = True) # ADD R10, R10, R9
+    Memory.Mem('0x8', din = '0x5828120A', we = True) # BEQ R10
     #Memory.Mem('0x8', din = '0x38180007', we = True) # STR R6, [R7]
-    Memory.Mem('0x30', din = '0x68000000', we = True) # HALT
+    Memory.Mem('0xC', din = '0x68000000', we = True) # HALT
     print(config.REGISTER)
     print(Memory.MEM_SPACE)
 
