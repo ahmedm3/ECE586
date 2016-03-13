@@ -1,6 +1,6 @@
-# ECE586
+#Simulator guidlines
 
-CPU Simulator
+#CPU Simulator
 
 Requirements:
 
