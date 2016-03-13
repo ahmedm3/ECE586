@@ -10,28 +10,28 @@ Requirements:
 
 To run the simulator, pleasae run the following command:
 
-python CPU.py -mem /path/to/memory/image
+- python CPU.py -mem /path/to/memory/image
 
 where /path/to/memory/image/ is the path the image file which is in the current directory
 Thus the command becomes 
 
-python CPU.py -mem mem_file
+- python CPU.py -mem mem_file
 
 
 Testing:
 
 To test each component separately, please run the following commands:
 
-For the ALU
+For the ALU:
 
-python ALU.py
+- python ALU.py
 
-For the Memory
+For the Memory:
 
-python Memory.py
+- python Memory.py
 
-For the instruction decoder
+For the instruction decoder:
 
-python instruction_decoder.py
+- python instruction_decoder.py
 
 Thank you for using the simulator!
