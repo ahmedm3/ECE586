@@ -2,35 +2,35 @@
 
 ###CPU Simulator
 
-Requirements:
+####Requirements:
 
 - Python 3.5+
 - Command Line Tool
 
 
-To run the simulator, pleasae run the following command:
+####To run the simulator, pleasae run the following command:
 
 - python CPU.py -mem /path/to/memory/image
 
-where /path/to/memory/image/ is the path the image file which is in the current directory
+####where /path/to/memory/image/ is the path the image file which is in the current directory
 Thus the command becomes 
 
 - python CPU.py -mem mem_file
 
 
-Testing:
+####Testing:
 
 To test each component separately, please run the following commands:
 
-For the ALU:
+####For the ALU:
 
 - python ALU.py
 
-For the Memory:
+####For the Memory:
 
 - python Memory.py
 
-For the instruction decoder:
+####For the instruction decoder:
 
 - python instruction_decoder.py
 
