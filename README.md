@@ -1,6 +1,6 @@
 #Simulator guidlines
 
-#CPU Simulator
+###CPU Simulator
 
 Requirements:
 
